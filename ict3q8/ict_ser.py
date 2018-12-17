@@ -103,3 +103,21 @@ def recvICT (ser):
         return rxbuf[:-2] # CRC abtrennen
     else:
         return -1
+    
+    
+def sendrecvICT (ser, txdata):
+    res = sendICT(ser, txdata)
+    resp = []
+    if res == ACK:
+        rxdata = recvICT(ser)
+        if rxdata[0] == 0x50: # "P"
+            resp.append(0)
+            resp.append(rxdata[3]-0x30)
+            resp.append(rxdata[4]-0x30)
+            if len(rxdata)>5:
+                resp.append(rxdata[5:])
+        else:
+            resp.append(1)
+            resp.append(rxdata[3]-0x30)
+            resp.append(rxdata[4]-0x30)
+    return resp    
