@@ -144,7 +144,13 @@ def ejectcard (ser, modus=0):
 
     
 
-def getalltracks (ser, tracklist):
+def gettracks (ser, tracklist):
+    '''
+    Holt die in tracklist angeforderten Spurdaten vom Leser.
+    Karte muß eingezogen und in Position sein.
+    Liefert 3-elementige Liste mit Nutzdaten der angeforderten Spuren zurück
+    Nicht angeforderte Spuren liefern leeres Listenelement
+    '''
     if ict.DEBUG:
         print ("Angeforderte Tracks: {}".format(tracklist))
     trackset = [] # Ergebnisliste Spurdaten

@@ -6,8 +6,6 @@ Created on 04.12.2018
 '''
 
 
-
-
 import ict3q8 as ict
     
 
@@ -28,10 +26,11 @@ except:
     ict.closeCOM(sPort)
     exit (1)
 
+
 res = ict.reqcard(sPort, 2)
-if res == 0: # Karte eingesteckt    
+if res == 0: # Karte eingesteckt und in Position?    
     tracklist = ict.check_magstripe(sPort) # Erstmal prüfen, welche Spuren Daten enthalten
-    trackset = ict.getalltracks (sPort, tracklist)
+    trackset = ict.gettracks (sPort, tracklist)
     
     for track in [1, 2, 3]:
         if trackset[track-1]:
