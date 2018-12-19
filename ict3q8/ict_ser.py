@@ -117,6 +117,7 @@ def sendrecvICT (ser, txdata):
             if len(rxdata)>5:
                 resp.append(rxdata[5:])
         else:
+            print(rxdata)
             resp.append(1)
             resp.append(rxdata[3]-0x30)
             resp.append(rxdata[4]-0x30)

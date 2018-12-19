@@ -165,3 +165,38 @@ def gettracks (ser, tracklist):
         else:
             trackset.append("")
     return trackset
+
+
+def cleartrackbuf(ser):
+    '''
+    Löscht die internen Spurpuffer des Lesers als Vorbereitung zum nachfolgenden Schreiben
+    '''
+    txdata = b'C66'
+    return ict.sendrecvICT(ser, txdata)
+
+
+def writetrackbuf (ser, track, trackdata):
+    '''
+    Beschreibt einen Spurpuffer im Leser mit den angegebenen Spurdaten
+    '''
+    lendict = {1:76, 2:37, 3:104}
+    if track in [1, 2, 3]:
+        if len (trackdata) <= lendict[track]:
+            print ("Länge Spur {}: {}".format (track, len(trackdata)))
+            txdata = b'C7' + bytes([track+0x35]) + trackdata
+            print (txdata)
+            res = ict.sendrecvICT(ser, txdata)
+            print (res)
+            return res
+        else:
+            print ("Fehler: Zuviele Spurdaten für Spur!")
+            return 1
+    else:
+        print ("Fehler: Falsche Spurnummer {}".format (track))
+        return 1
+ 
+def writealltracks (ser):
+    txdata = b'C7010'
+    print (ict.sendrecvICT(ser, txdata))
+    txdata = b'C79'
+    return ict.sendrecvICT(ser, txdata)
