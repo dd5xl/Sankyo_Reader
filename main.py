@@ -30,8 +30,8 @@ except:
     exit (1)
 
 
-'''
-res = ict.reqcard(sPort, 2)
+
+res = ict.reqcard(sPort, 0)
 if res == 0: # Karte eingesteckt und in Position?    
     tracklist = ict.check_magstripe(sPort) # Erstmal prüfen, welche Spuren Daten enthalten
     trackset = ict.gettracks (sPort, tracklist)
@@ -44,9 +44,9 @@ if res == 0: # Karte eingesteckt und in Position?
 else:
     print ("Fehler oder Timeout beim Karte einstecken: {}".format (res))        
 
-
-ict.ejectcard(sPort)
 '''
+ict.ejectcard(sPort)
+
 print ("Leere Karte einschieben!")
 
 res = ict.reqcard(sPort, 0)
@@ -62,7 +62,7 @@ if res == 0:
 else:
     print ("Fehler oder Timeout beim Karte einstecken: {}".format (res))        
 
-'''
+
 for track in [1, 2, 3]:
     if trackset[track-1]:
         print ("Schreibe Puffer Spur {}: ".format (track), end="")
